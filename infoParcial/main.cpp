@@ -4,3 +4,5 @@ void setup(){
     pinMode(pinClock, OUTPUT);
     Serial.begin(9600);
 }
+
+
