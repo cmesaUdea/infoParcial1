@@ -25,3 +25,10 @@ void loop(){
         secuencias();
     }
 }
+
+void verificacion(){
+    encenderLeds();
+    delay(2000);
+    apagarLeds();
+    delay(1000);
+}
