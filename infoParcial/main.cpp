@@ -5,6 +5,81 @@ void setup(){
     Serial.begin(9600);
 }
 
+void imagen() {
+    int *valoresFilasLeds = new int[BYTE_SIZE]; // Aplicación de memoria dinamica en un arreglo
+    int secu, tiempo, i = 0;
+    Serial.println("Ingrese 8 filas: (ej: 11100111)");
+
+    for (int fila = 0; fila < BYTE_SIZE; fila++) { // Recorro cada una de las filas de leds
+        char linea[BYTE_SIZE + 1]; // Defino el arreglo con un espacio mas para el valor '\0'
+        while (Serial.available() == 0) {} // Mantengo en espera de un nuevo datos ingresado
+        Serial.readBytesUntil('\n', linea, BYTE_SIZE); // Leo caracter por caracter hasta encontrar un salto de linea
+        linea[BYTE_SIZE] = '\0'; // Agrego un carácter nulo al final del arreglo para formar una cadena válida
+        valoresFilasLeds[fila] = binarioAEntero(linea); // Asigno al array de enteros el binario ingresado convertido a entero
+        Serial.print("Leido:");
+        Serial.println(linea);
+        // Limpieza del arreglo
+        memset(linea, 0, sizeof(linea));
+    }
+    Serial.println("Ingrese la cantidad de secuencias: ");
+    while(Serial.available() == 0) {}
+    secu = Serial.parseInt();
+  	Serial.println("Ingrese el tiempo de retardo en ms: ");
+    while(Serial.available() == 0) {}
+  	tiempo = Serial.parseInt();
+
+    while(i < secu){
+      // Recorro el arreglo para saber cuanto desplazarlo (de acuerdo a lo ingresado)
+      // Se recorre en reversa para que se iluminen de la misma forma en la que se ingresó
+      for (int fila = BYTE_SIZE; fila > 0; fila--) {
+          shiftOut(pinData, pinClock, LSBFIRST, valoresFilasLeds[fila-1]);
+      }
+
+      // Ya asignados los desplazamientos mando la señal digital
+      digitalWrite(pinLatch, HIGH);
+      digitalWrite(pinLatch, LOW);
+
+      
+
+      Serial.println("Mostrando patron...");
+
+      delay(tiempo);
+
+      apagarLeds();
+      
+      delay(tiempo);
+      i++;
+  }
+  //se libera la memoria dinamica
+  delete[] valoresFilasLeds;
+}
+
+
+void secuencias(){
+    Serial.println("Ingrese el tiempo de retardo en ms: ");
+    while (Serial.available() == 0) {}
+    int retardo = Serial.parseInt();
+
+    secuenciaRombo();
+    delay(retardo);
+    apagarLeds();
+    delay(retardo);
+
+    secuenciaX();
+    delay(retardo);
+    apagarLeds();
+    delay(retardo);
+
+    secuenciaCuadrados();
+    delay(retardo);
+    apagarLeds();
+    delay(retardo);
+
+    secuenciaFlecha();
+    delay(retardo);
+    apagarLeds();
+    delay(retardo);
+}
 
 
 
