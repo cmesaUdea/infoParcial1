@@ -27,10 +27,21 @@ void loop(){
 }
 
 void verificacion(){
-    encenderLeds();
-    delay(2000);
-    apagarLeds();
-    delay(1000);
+    int secu, time, i = 0;
+    Serial.println("Ingrese el numero de secuencias: ");
+    while(Serial.available() == 0) {}
+    secu = Serial.parseInt();
+    Serial.println("Ingrese el tiempo de retardo en ms: ");
+    while(Serial.available() == 0) {}
+    time = Serial.parseInt();
+    Serial.println("Mostrando secuencia...");
+    while(i < secu){
+        encenderLeds();
+        delay(time);
+        apagarLeds();
+        delay(time);
+        i ++;
+    }
 }
 
 void secuenciaX() {
