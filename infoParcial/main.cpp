@@ -34,14 +34,14 @@ void verificacion(){
 }
 
 void secuenciaX() {
-    int valoresFilasLeds[BYTE_SIZE];
+    int* valoresFilasLeds = new int[BYTE_SIZE];
     int valorLedIzq = 128;
     int valorLedDer = 1;
     int valor = 0;
     for (int i = 0; i < 4; i++) {
         valor = valorLedIzq + valorLedDer;
-        valoresFilasLeds[i] = valor; // Guardo la fila que va hacia arriba
-        valoresFilasLeds[(BYTE_SIZE - 1) - i] = valor; // Guardo la misma fila que va hacia abajo
+        valoresFilasLeds[i] = valor;
+        valoresFilasLeds[(BYTE_SIZE - 1) - i] = valor;
         valorLedIzq = valorLedIzq/2;
         valorLedDer = valorLedDer*2;
     }
@@ -50,9 +50,11 @@ void secuenciaX() {
         shiftOut(pinData, pinClock, LSBFIRST, valoresFilasLeds[i]);
     }
 
-    // Ya asignados los desplazamientos mando la señal digital
     digitalWrite(pinLatch, HIGH);
     digitalWrite(pinLatch, LOW);
+
+    delete[] valoresFilasLeds;
+
     Serial.println("Mostrando patron 2...");
 }
 
@@ -61,7 +63,7 @@ void secuenciaFlecha() {
 
     for (int i = 0; i < 4; i++) {
         shiftOut(pinData, pinClock, LSBFIRST, valorInicial);
-        if(i != 3){ // Para que se repita el patron del medio (no desplazo)
+        if(i != 3){
             valorInicial = (valorInicial >> 1);
         }
     }
@@ -69,7 +71,7 @@ void secuenciaFlecha() {
         shiftOut(pinData, pinClock, LSBFIRST, valorInicial);
         valorInicial = (valorInicial << 1);
     }
-    // Ya asignados los desplazamientos mando la señal digital
+
     digitalWrite(pinLatch, HIGH);
     digitalWrite(pinLatch, LOW);
     Serial.println("Mostrando patron 4...");
