@@ -10,7 +10,7 @@ void setup(){
 
 
 void secuenciaRombo() {
-  int valoresFilasLeds[BYTE_SIZE];
+  int* valoresFilasLeds = new int[BYTE_SIZE];
   int valorLedIzq = 16;
   int valorLedDer = 8;
   int valor = 0;
@@ -30,12 +30,11 @@ void secuenciaRombo() {
   // Ya asignados los desplazamientos mando la señal digital
   digitalWrite(pinLatch, HIGH);
   digitalWrite(pinLatch, LOW);
+
+  delete[] valoresFilasLeds;
+
   Serial.println("Mostrando patron 1...");
 }
-
-
-
-
 
 
 
@@ -50,9 +49,9 @@ void secuenciaCuadrados() {
         valoresFilasLeds[fila] = valorInicial;
         fila++; // Lo guardo en un array para mostrarlo de arriba hacia abajo
       }
-      //Serial.println(valorInicial);
+      
       valorInicial = (valorInicial >> 1);
-      //Serial.println(valorInicial);
+      
     }
   }
   
