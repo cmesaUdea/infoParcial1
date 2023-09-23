@@ -102,4 +102,23 @@ void apagarLeds(){
   digitalWrite(pinLatch, LOW);
 }
 
+// Hago uso de punteros para recorrer el arreglo de caracteres
+int binarioAEntero(char binario[]) {
+    int entero = 0;
+    char* ptr = binario;
+    while (*ptr != '\0') {
+        char digito = *ptr;
 
+        if (digito == '1') {
+            entero = (entero << 1) | 1;
+        } else if (digito == '0') {
+            entero = entero << 1;
+        } else {
+            // Manejo de error si se encuentra un carácter no válido
+            Serial.println("Error: Cadena de binario no válida");
+                return -1; // Valor de error
+        }
+        ptr++; // Apunto al siguiente elemento del arreglo
+    }
+    return entero;
+}
