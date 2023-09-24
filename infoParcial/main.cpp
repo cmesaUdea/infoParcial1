@@ -5,6 +5,7 @@ void setup(){
     Serial.begin(9600);
 }
 
+<<<<<<< HEAD
 void imagen() {
     int *valoresFilasLeds = new int[BYTE_SIZE]; // Aplicación de memoria dinamica en un arreglo
     int secu, tiempo, i = 0;
@@ -197,3 +198,6 @@ int binarioAEntero(char binario[]) {
     }
     return entero;
 }
+=======
+
+>>>>>>> jose
