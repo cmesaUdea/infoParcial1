@@ -1,3 +1,10 @@
+int pinData  = 2;
+int pinLatch = 3;
+int pinClock = 4;
+char data;
+#define TIEMPO 200
+#define BYTE_SIZE 8
+
 void setup(){
     pinMode(pinData, OUTPUT);
     pinMode(pinLatch, OUTPUT);
@@ -5,7 +12,46 @@ void setup(){
     Serial.begin(9600);
 }
 
-<<<<<<< HEAD
+
+void loop(){
+    publik();
+    while (Serial.available() == 0) {}
+    data = Serial.read();
+    if(data == '1'){
+        verificacion();
+    } else if (data == '2'){
+        imagen();
+    } else if (data == '3'){
+        secuencias();
+    }
+}
+
+void publik(){
+    Serial.println("***********");
+    Serial.println("Bienvenido");
+    Serial.println("1. Probar Leds");
+    Serial.println("2. Ingresar imagen (8 lineas de 1 y 0)");
+    Serial.println("3. Probar secuencias");
+}
+
+void verificacion(){
+  	int secu, time, i = 0;
+    Serial.println("Ingrese el numero de secuencias: ");
+    while(Serial.available() == 0) {}
+    secu = Serial.parseInt();
+    Serial.println("Ingrese el tiempo de retardo en ms: ");
+    while(Serial.available() == 0) {}
+    time = Serial.parseInt();
+    Serial.println("Mostrando secuencia...");
+    while(i < secu){
+        encenderLeds();
+        delay(time);
+        apagarLeds();
+        delay(time);
+        i ++;
+    }  
+}
+
 void imagen() {
     int *valoresFilasLeds = new int[BYTE_SIZE]; // Aplicación de memoria dinamica en un arreglo
     int secu, tiempo, i = 0;
@@ -41,7 +87,6 @@ void imagen() {
       digitalWrite(pinLatch, LOW);
 
       
-
       Serial.println("Mostrando patron...");
 
       delay(tiempo);
@@ -54,7 +99,6 @@ void imagen() {
   //se libera la memoria dinamica
   delete[] valoresFilasLeds;
 }
-
 
 void secuencias(){
     Serial.println("Ingrese el tiempo de retardo en ms: ");
@@ -82,9 +126,6 @@ void secuencias(){
     delay(retardo);
 }
 
-
-
-
 void secuenciaRombo() {
   int* valoresFilasLeds = new int[BYTE_SIZE];
   int valorLedIzq = 16;
@@ -111,8 +152,6 @@ void secuenciaRombo() {
 
   Serial.println("Mostrando patron 1...");
 }
-
-
 
 void secuenciaCuadrados() {
   int* valoresFilasLeds = new int[BYTE_SIZE]; // Asignación de memoria dinámica para un arreglo de enteros
@@ -144,7 +183,6 @@ void secuenciaCuadrados() {
 
   Serial.println("Mostrando patron 3...");
 }
-
 
 void encederLeds(){
     Serial.println("Probando leds...");
@@ -198,6 +236,3 @@ int binarioAEntero(char binario[]) {
     }
     return entero;
 }
-=======
-
->>>>>>> jose
