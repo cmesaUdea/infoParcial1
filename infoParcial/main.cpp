@@ -183,7 +183,6 @@ void secuenciaCuadrados() {
   int fila = 0;
   for (int i = 0; i < 2; i++) {
     byte valorInicial = B11011011;
-    Serial.println(valorInicial);
     for (int j = 0; j < 2; j++) {
       for (int k = 0; k < 2; k++) {
         valoresFilasLeds[fila] = valorInicial;
@@ -228,7 +227,7 @@ void secuenciaFlecha() {
     Serial.println("Mostrando patron 4...");
 }
 
-void encederLeds(){
+void encenderLeds(){
     Serial.println("Probando leds...");
     shiftOut(pinData, pinClock, LSBFIRST, 255); //shiftout envia datos a dispositivos externos
     shiftOut(pinData, pinClock, LSBFIRST, 255); 
